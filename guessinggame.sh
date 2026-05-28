@@ -1,25 +1,27 @@
 #!/usr/bin/env bash
 
-count_files() {
-    find . -maxdepth 1 -type f | wc -l
+function count_files {
+    files=$(find . -maxdepth 1 -type f | wc -l)
+    echo $files
 }
 
-file_count=$(count_files)
+file_total=$(count_files)
 
-echo "Adivina cuántos archivos hay en el directorio actual."
+echo "Welcome to the guessing game."
 
-while true
+guess=-1
+
+while [[ $guess -ne $file_total ]]
 do
-    read -p "Introduce tu número: " guess
+    read -p "Enter your guess: " guess
 
-    if [[ $guess -lt $file_count ]]
+    if [[ $guess -lt $file_total ]]
     then
-        echo "Demasiado bajo."
-    elif [[ $guess -gt $file_count ]]
+        echo "Too low"
+    elif [[ $guess -gt $file_total ]]
     then
-        echo "Demasiado alto."
+        echo "Too high"
     else
-        echo "¡Correcto! Hay $file_count archivos."
-        break
+        echo "Correct!"
     fi
 done
